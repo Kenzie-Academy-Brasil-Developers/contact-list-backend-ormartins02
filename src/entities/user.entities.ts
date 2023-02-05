@@ -3,8 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
+  JoinColumn,
 } from "typeorm";
 import { v4 as uuid } from "uuid"
+import { Contact } from "./contact.entities";
 
 @Entity("users")
 export class User {
@@ -22,6 +25,13 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(
+    () => Contact,
+    (contacts) => contacts.user
+  )
+  @JoinColumn()
+  contacts: Contact[];
 
   constructor() {
     if (!this.id) {

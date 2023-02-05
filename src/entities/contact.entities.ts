@@ -3,8 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid"
+import { User } from "./user.entities";
 
 @Entity("contacts")
 export class Contact {
@@ -22,6 +25,9 @@ export class Contact {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @ManyToOne(() => User)
+  user: User;
 
   constructor() {
     if (!this.id) {
