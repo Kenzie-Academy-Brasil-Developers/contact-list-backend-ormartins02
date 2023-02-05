@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { createUserService } from "../services/createUser.services";
+import { createUserService } from "../../services/users/createUser.services";
 import { instanceToPlain } from "class-transformer";
-import { User } from "../entities/user.entities";
+import { User } from "../../entities/user.entities";
 
 export const createUserController = async (req: Request, res: Response) => {
   const user = req.body;

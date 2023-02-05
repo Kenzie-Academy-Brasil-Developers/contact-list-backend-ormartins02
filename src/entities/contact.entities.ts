@@ -6,8 +6,8 @@ import {
 } from "typeorm";
 import { v4 as uuid } from "uuid"
 
-@Entity("users")
-export class User {
+@Entity("contacts")
+export class Contact {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { instanceToPlain } from "class-transformer";
-import { retrieveUserService } from "../services/retrieveUser.services";
+import { retrieveUserService } from "../../services/users/retrieveUser.services";
 
 export const retrieveUserController = async (req: Request, res: Response) => {
   const users = await retrieveUserService();

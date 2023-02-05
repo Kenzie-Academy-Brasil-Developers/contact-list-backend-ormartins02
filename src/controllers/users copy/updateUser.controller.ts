@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { instanceToPlain } from "class-transformer";
-import { IUserUpdate } from "../../interfaces/users";
-import { updateUserService } from "../../services/user/updateUser.services";
+import { IUserUpdate } from "../../interfaces/usersInterfaces";
+import { updateUserService } from "../../services/users/updateUser.services";
 
 export const updateUserController = async (req: Request, res: Response) => {
   const { id } = req.params;
