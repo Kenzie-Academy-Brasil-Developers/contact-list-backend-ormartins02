@@ -5,19 +5,19 @@ import { updateContactController } from "../controllers/contacts/updateContact.c
 import { deleteContactController } from "../controllers/contacts/deleteContact.controller";
 import { ensureBodyVerifyMiddleware } from "../middlewares/ensureBodyVerify.middleware";
 
-export const userRoutes = Router();
+export const contactRoutes = Router();
 
-userRoutes.post("", createContactController);
-userRoutes.get(
+contactRoutes.post("", createContactController);
+contactRoutes.get(
   "",
   retrieveContactController
 );
-userRoutes.patch(
+contactRoutes.patch(
   "/:id",
   ensureBodyVerifyMiddleware,
   updateContactController
 );
-userRoutes.delete(
+contactRoutes.delete(
   "/:id",
   deleteContactController
 );
