@@ -16,24 +16,20 @@ export class User {
   @Column({ length: 60 })
   name: string;
 
-  @Column({ length: 60, unique: true })
-  email: string;
+  @Column({ length: 60, unique: false })
+  primary_email: string;
 
-  @Column()
-  isAdm: boolean;
+  @Column({ length: 60, unique: false })
+  second_email: string;
 
-  @Column({ default: true })
-  isActive: boolean;
+  @Column({ length: 14, unique: false })
+  primary_phone: string;
 
-  @Column({ length: 120 })
-  @Exclude()
-  password: string;
+  @Column({ length: 14, unique: false })
+  second_phone: string;
 
   @CreateDateColumn()
   createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   constructor() {
     if (!this.id) {
