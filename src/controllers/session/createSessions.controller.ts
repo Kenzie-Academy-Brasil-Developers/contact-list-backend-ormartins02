@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IUserLogin } from "../../interfaces/users";
+import { IUserLogin } from "../../interfaces/usersInterfaces";
 import { createSessionsService } from "../../services/session/createSessions.services";
 
 export const createSessionsController = async (req: Request, res: Response) => {

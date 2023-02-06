@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
@@ -22,6 +23,13 @@ export class User {
 
   @Column({ length: 14, unique: true })
   phone: string;
+
+  @Column({ length: 120 })
+  @Exclude()
+  password: string;
+
+  @Column({ default: false })
+  isAdm: boolean;
 
   @CreateDateColumn()
   createdAt: Date;

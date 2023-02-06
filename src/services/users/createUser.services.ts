@@ -7,7 +7,11 @@ export const createUserService = async ({
   name,
   email,
   phone,
+  password,
+  isAdm
 }: IUserRequest): Promise<User> => {
+
+  const bcrypt = require('bcryptjs')
 
   const userRepository = AppDataSource.getRepository(User);
 
@@ -21,6 +25,8 @@ export const createUserService = async ({
     name,
     email,
     phone,
+    password: await bcrypt.hash(password, 10),
+    isAdm
   });
 
   await userRepository.save(user);
