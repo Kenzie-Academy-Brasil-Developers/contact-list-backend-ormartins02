@@ -18,18 +18,19 @@ export const createSessionsService = async ({
   });
 
   if (!user) {
-    throw new AppError("Invalida user or password", 403);
+    throw new AppError("Invalid user or password", 403);
   }
 
   const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (!passwordMatch) {
-    throw new AppError("Invalida user or password", 403);
+    throw new AppError("Invalid user or password", 403);
   }
 
   const token = jwt.sign(
     {
       id: user.id,
+      isAdm: user.isAdm
     },
     process.env.SECRET_KEY as string,
     {

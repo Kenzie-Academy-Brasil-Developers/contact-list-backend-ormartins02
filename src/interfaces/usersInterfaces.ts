@@ -5,7 +5,7 @@ export interface IUserRequest {
   email: string;
   phone: string;
   password: string;
-  isAdm?: boolean;
+  isAdm: boolean;
 }
 
 export interface IUser {
@@ -15,7 +15,6 @@ export interface IUser {
   phone: string;
   isAdm: boolean;
   createdAt: Date;
-  contacts: Contact[];
 }
 export interface IUserUpdate {
   name?: string;

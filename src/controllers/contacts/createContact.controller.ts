@@ -5,8 +5,9 @@ import { createNewContactService } from "../../services/contacts/createContact.s
 
 export const createContactController = async (req: Request, res: Response) => {
   const contact = req.body;
+  const id = req.user.id
 
-  const newContact = await createNewContactService(contact);
+  const newContact = await createNewContactService(contact, id);
   if (newContact instanceof Contact) {
     return res.status(201).json(instanceToPlain(newContact));
   }

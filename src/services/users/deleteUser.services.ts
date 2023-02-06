@@ -12,5 +12,7 @@ export const deleteUserService = async (id: string) => {
     throw new AppError("User not Found", 404);
   }
 
-  return "User desactived";
+  await userRepository.delete(id)
+
+  return "User deleted";
 };
