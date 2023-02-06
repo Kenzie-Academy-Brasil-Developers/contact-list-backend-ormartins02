@@ -5,7 +5,7 @@ export const ensureBodyVerifyMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id, isAdm, isActive } = req.body;
+  const { id, createdAt,  } = req.body;
 
   if (id !== undefined) {
     return res
@@ -13,17 +13,10 @@ export const ensureBodyVerifyMiddleware = async (
       .json({ message: "These properties cannot be updated" });
   }
 
-  if (isActive !== undefined) {
+  if (createdAt !== undefined) {
     return res
       .status(401)
       .json({ message: "These properties cannot be updated" });
   }
-
-  if (isAdm !== undefined) {
-    return res
-      .status(401)
-      .json({ message: "These properties cannot be updated" });
-  }
-
   return next();
 };

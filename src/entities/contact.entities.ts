@@ -1,17 +1,16 @@
-import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   OneToMany,
-  JoinColumn,
+  ManyToOne,
 } from "typeorm";
 import { v4 as uuid } from "uuid"
-import { Contact } from "./contact.entities";
+import { User } from "./user.entities";
 
-@Entity("users")
-export class User {
+@Entity("contacts")
+export class Contact {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
@@ -24,22 +23,11 @@ export class User {
   @Column({ length: 14, unique: true })
   phone: string;
 
-  @Column({ length: 120 })
-  @Exclude()
-  password: string;
-
-  @Column({ default: false })
-  isAdm: boolean;
-
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(
-    () => Contact,
-    (contacts) => contacts.user
-  )
-  @JoinColumn()
-  contacts: Contact[];
+  @ManyToOne(() => User)
+  user: User;
 
   constructor() {
     if (!this.id) {

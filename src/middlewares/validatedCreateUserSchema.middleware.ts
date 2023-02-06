@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { SchemaOf } from "yup";
-import { IUserRequest } from "../interfaces/users";
+import { IUserRequest } from "../interfaces/usersInterfaces";
 
 export const validateCreateUserSchemaMiddleware =
   (schema: SchemaOf<IUserRequest>) =>

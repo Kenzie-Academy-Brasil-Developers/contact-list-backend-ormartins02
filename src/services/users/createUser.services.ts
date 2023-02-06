@@ -1,13 +1,14 @@
-import AppDataSource from "../data-source";
-import { User } from "../entities/user.entities";
-import { AppError } from "../errors/appError";
-import { IUserRequest } from "../interfaces/users";
+import AppDataSource from "../../data-source";
+import { User } from "../../entities/user.entities";
+import { AppError } from "../../errors/appError";
+import { IUserRequest } from "../../interfaces/usersInterfaces";
 
 export const createUserService = async ({
   name,
   email,
-  isAdm,
+  phone,
   password,
+  isAdm
 }: IUserRequest): Promise<User> => {
 
   const bcrypt = require('bcryptjs')
@@ -23,8 +24,9 @@ export const createUserService = async ({
   const user = userRepository.create({
     name,
     email,
-    isAdm,
+    phone,
     password: await bcrypt.hash(password, 10),
+    isAdm
   });
 
   await userRepository.save(user);
