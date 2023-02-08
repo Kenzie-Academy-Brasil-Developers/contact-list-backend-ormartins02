@@ -10,7 +10,7 @@
     "test": "cross-env NODE_ENV=test jest --verbose",
     "typeorm": "typeorm-ts-node-commonjs",    
     "build": "tsc",
-    "start": "node cross-env NODE_ENV=production dist/src/server.js"
+    "start": "node NODE_ENV=production dist/src/server.js"
   },
   "devDependencies": {
     "@types/express": "^4.17.16",
