@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { instanceToPlain } from "class-transformer";
-import { Contact } from "../../entities/contact.entities";
 import { createNewContactService } from "../../services/contacts/createContact.services";
 
 export const createContactController = async (req: Request, res: Response) => {
@@ -8,8 +6,6 @@ export const createContactController = async (req: Request, res: Response) => {
   const id = req.user.id
 
   const newContact = await createNewContactService(contact, id);
-  if (newContact instanceof Contact) {
-    return res.status(201).json(instanceToPlain(newContact));
-  }
-  return res.status(newContact[1] as number).json(newContact[0]);
+
+  return res.status(201).json(newContact);
 };

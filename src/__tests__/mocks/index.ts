@@ -1,3 +1,4 @@
+import { IContactMockedRequest } from "../../interfaces/contactsInterfaces";
 import { IUserLogin, IUserRequest } from "../../interfaces/usersInterfaces";
 
 export const mockedUserAdm: IUserRequest = {
@@ -16,35 +17,27 @@ export const mockedUserNoAdm: IUserRequest = {
   phone: "11913434556",
 };
 
-export const mockedContact1: IUserRequest = {
+export const mockedContact1: IContactMockedRequest = {
   name: "Guilherme Martins",
   email: "guilherme@mail.com",
-  password: "123456",
-  isAdm: false,
   phone: "11999897898",
 };
 
-export const mockedContact2: IUserRequest = {
+export const mockedContact2: IContactMockedRequest = {
   name: "Henrique Martins",
   email: "henrique@mail.com",
-  password: "123456",
-  isAdm: false,
   phone: "11999897899",
 };
 
-export const mockedContact3: IUserRequest = {
+export const mockedContact3: IContactMockedRequest = {
   name: "Gabriela Martins",
-  email: "guilherme@mail.com",
-  password: "123456",
-  isAdm: false,
+  email: "gabriela@mail.com",
   phone: "11999897900",
 };
 
-export const mockedContact4: IUserRequest = {
+export const mockedContact4: IContactMockedRequest = {
   name: "Isabela Martins",
-  email: "henrique@mail.com",
-  password: "123456",
-  isAdm: false,
+  email: "isabela@mail.com",
   phone: "11999897901",
 };
 

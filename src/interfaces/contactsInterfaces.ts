@@ -20,3 +20,9 @@ export interface IContactUpdate {
   phone?: string;
   password?: string;
 }
+
+export interface IContactMockedRequest {
+  name: string;
+  email: string;
+  phone: string;
+}

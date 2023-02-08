@@ -1,4 +1,3 @@
-import { Contact } from "../entities/contact.entities";
 
 export interface IUserRequest {
   name: string;

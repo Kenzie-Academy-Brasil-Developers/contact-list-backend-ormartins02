@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entities";
-import { AppError } from "../../errors/appError";
+import AppError from "../../errors/appError";
 import { IUserRequest } from "../../interfaces/usersInterfaces";
 
 export const createUserService = async ({
@@ -18,7 +18,7 @@ export const createUserService = async ({
   const emailExist = await userRepository.findOneBy({ email });
 
   if (emailExist) {
-    throw new AppError("This email is already being used", 400);
+    throw new AppError("This email is already being used", 409);
   }
 
   const user = userRepository.create({

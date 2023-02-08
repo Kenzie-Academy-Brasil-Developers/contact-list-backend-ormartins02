@@ -2,7 +2,7 @@ import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entities";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { AppError } from "../../errors/appError";
+import AppError from "../../errors/appError";
 import { IUserLogin } from "../../interfaces/usersInterfaces";
 
 export const createSessionsService = async ({

@@ -3,10 +3,10 @@ import { createContactController } from "../controllers/contacts/createContact.c
 import { retrieveContactController } from "../controllers/contacts/retrieveContact.controller";
 import { updateContactController } from "../controllers/contacts/updateContact.controller";
 import { deleteContactController } from "../controllers/contacts/deleteContact.controller";
-import { ensureBodyVerifyMiddleware } from "../middlewares/ensureBodyVerify.middleware";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
-import { ensureIdVerifyMiddleware } from "../middlewares/ensureIdVerify.middleware";
 import { ensureIsAdmMiddleware } from "../middlewares/ensureIsAdm.middleware";
+import { ensureIdContactVerifyMiddleware } from "../middlewares/ensureIdContactVerify.middleware";
+import { ensureIsAdmToUpdateContactMiddleware } from "../middlewares/ensureIsAdmToUpdateContact.middleware";
 
 export const contactRoutes = Router();
 
@@ -25,13 +25,14 @@ contactRoutes.get(
 contactRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
-  ensureIdVerifyMiddleware,
-  ensureBodyVerifyMiddleware,
+  ensureIdContactVerifyMiddleware,
+  ensureIsAdmToUpdateContactMiddleware,
   updateContactController
 );
 contactRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureIdVerifyMiddleware,
+  ensureIdContactVerifyMiddleware,
+  ensureIsAdmToUpdateContactMiddleware,
   deleteContactController
 );

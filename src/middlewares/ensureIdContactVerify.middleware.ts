@@ -1,27 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import AppDataSource from "../data-source";
 import AppError from "../errors/appError";
-import { User } from "../entities/user.entities";
+import { Contact } from "../entities/contact.entities";
 
-export const ensureIdVerifyMiddleware = async (
+export const ensureIdContactVerifyMiddleware = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   const id = req.params.id
 
-  if (!id) {
-    throw new AppError("Id is required", 404);
-  }
-
-  const contactsRepository =
-    AppDataSource.getRepository(User);
-
+  const contactsRepository = AppDataSource.getRepository(Contact);
 
   const contact = await contactsRepository.findOneBy({id});
 
   if (!contact) {
-    throw new AppError("This user dont exist", 404);
+    throw new AppError("This contact dont exist", 404);
   }
 
   return next();

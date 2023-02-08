@@ -1,7 +1,7 @@
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entities";
 import { User } from "../../entities/user.entities";
-import { AppError } from "../../errors/appError";
+import AppError from "../../errors/appError";
 import { IUserUpdate } from "../../interfaces/usersInterfaces";
 
 export const updateUserService = async (
