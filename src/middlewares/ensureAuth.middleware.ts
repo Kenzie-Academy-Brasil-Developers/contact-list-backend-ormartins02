@@ -6,7 +6,7 @@ export const ensureAuthMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.headers) {
+  if (!req.headers.authorization) {
     return res.status(401).json({ message: "Token required" });
   }
 

@@ -85,9 +85,11 @@ The User object is defined as:
 | id         | string   | User's unique identifier                          |
 | name       | string   | User name \*                                      |
 | email      | string   | User email \*                                     |
+| phone      | string   | Contact Phone \*                                  |
 | password   | string   | User password \*                                  |
 | isAdm      | boolean  | Defines whether a user is an administrator or not |
 | createdAt  | string   | Date when the user was created                    |
+---
 
 <br>
 
@@ -100,7 +102,6 @@ The User object is defined as:
 | Method | Routes      | Description                              |
 | ------ | ----------- | ---------------------------------------- |
 | POST   | /users      | Create user                              |
-| POST   | /login      | Login user                               |
 | GET    | /users      | List all users                           |
 | GET    | /users/:id  | Lists a user using its ID as a parameter |
 | PATCH  | /user/:id   | Update user                              |
@@ -109,10 +110,6 @@ The User object is defined as:
 ---
 
 <br>
-_____________________________________________________________
-
-## PAREI AQUI
-_____________________________________________________________
 
 ## **1.1 User Creation**
 
@@ -137,13 +134,11 @@ _____________________________________________________________
 
 ```json
 {
-  "name": "Thiago",
-  "email": "thiago@mail.com",
-  "isAdm": true,
-  "contact": "xx 9xxxx xxxx",
-  "birthDate": "2000/01/01",
-  "isEmployee": false,
-  "password": "1234"
+  "name": "Ricardo",
+  "email": "ricardo@mail.com",
+  "phone": "0xx 9xxxx-xxxx",
+  "password": "1234",
+  "isAdm": true
 }
 ```
 
@@ -159,16 +154,12 @@ _____________________________________________________________
 {
 
   {
-    "id": "f1719800-2e5a-4270-88de-64380f73dd3d",
-    "name": "Thiago",
-    "bithDate": "2000/01/01",
+    "id": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+    "name": "Ricardo",
+    "email": "ricardo@mail.com",
+    "phone" : "0xx 9xxxx-xxxx",
     "isAdm": true,
-    "isEmployee": false,
-    "contact" : "99988866677",
-    "email": "thiago@mail.com",
-    "isActive": true,
     "createdAt": "2022-10-29T00:41:28.717Z",
-    "updatedAt": "2022-10-29T00:41:28.717Z"
   }
 }
 ```
@@ -179,15 +170,6 @@ _____________________________________________________________
 
 <br>
 
-#### **Status `400 - BAD REQUEST`** - Missing required field
-
-```json
-{
-  "message": "(any object key) is a required field"
-}
-```
-
-<br>
 
 #### **Status `409 - CONFLICTS`** - Email already exists
 
@@ -199,64 +181,9 @@ _____________________________________________________________
 
 #
 
-## **1.2 Login**
-
-[Back to Endpoints](#3-endpoints)
-
 <br>
 
-## SIGN `/login`
-
-<br>
-
-### **Request**
-
-- SIGN /login
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: None
-- Content-type: application/json
-- User must be created
-
-<br>
-
-### **Request body**:
-
-```json
-{
-  "email": "thiago@mail.com",
-  "password": "1234"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6dHJ1ZSwiaXNFbXBsb3llZSI6dHJ1ZSwiaWF0IjoxNjY3OTY0MDY2LCJleHAiOjE2NjgwNTA0NjYsInN1YiI6ImE4M2MxMjVjLWNjZjctNDA4NC04NTg1LWFhZDYyMWZiMjY5MSJ9.LHflvucPDWutAUSUa-O9NY516Y1s5bNVnVtdKPsu89k"
-}
-```
-
-### **Error Response**:
-
-<br>
-
-#### **Status `403 - FORBIDDEN`** - "Invalid user or password"
-
-```json
-{
-  "message": "Invalid user or password"
-}
-```
-
-#
-
-## **1.3 List Users**
+## **1.2 List Users**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -295,19 +222,14 @@ _____________________________________________________________
 
 ```json
 {
-
-   [
+  [
     {
-      "id": "f1719800-2e5a-4270-88de-64380f73dd3d",
-      "name": "Thiago",
-      "bithDate": "2000/01/01",
-      "isAdm": true,
-      "isEmployee": false,
-      "contact" : "99988866677",
-      "email": "thiago@mail.com",
-      "isActive": true,
-      "createdAt": "2022-10-29T00:41:28.717Z",
-      "updatedAt": "2022-10-29T00:41:28.717Z"
+    "id": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+    "name": "Ricardo",
+    "email": "ricardo@mail.com",
+    "phone" : "0xx 9xxxx-xxxx",
+    "isAdm": true,
+    "createdAt": "2022-10-29T00:41:28.717Z",
     }
     ...
   ]
@@ -320,7 +242,7 @@ _____________________________________________________________
 
 <br>
 
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
+#### **Status `401 - UNAUTHORIZED`** - "Token required"
 
 ```json
 {
@@ -340,7 +262,7 @@ _____________________________________________________________
 
 #
 
-## **1.4 List User by Id**
+## **1.3 List User by Id**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -357,7 +279,7 @@ _____________________________________________________________
 - Authorization: Bearer Token
 - Content-type: application/json
 - Empty body
-- User must be an Adm or employee
+- User must be an Adm or User common
 
 <br>
 
@@ -380,18 +302,15 @@ _____________________________________________________________
 ```json
 {
 
-   [
-    {
-      "id": "f1719800-2e5a-4270-88de-64380f73dd3d",
-      "name": "Thiago",
-      "email": "thiago@mail.com",
-      "isAdm": true,
-      "isActive": true,
-      "createdAt": "",
-      "updatedAt": ""
+   {
+    "id": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+    "name": "Ricardo",
+    "email": "ricardo@mail.com",
+    "phone" : "0xx 9xxxx-xxxx",
+    "isAdm": true,
+    "createdAt": "2022-10-29T00:41:28.717Z",
+    "contacts": []
     }
-    ...
-  ]
 }
 ```
 
@@ -401,7 +320,7 @@ _____________________________________________________________
 
 <br>
 
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
+#### **Status `401 - UNAUTHORIZED`** - "Token required"
 
 ```json
 {
@@ -411,21 +330,9 @@ _____________________________________________________________
 
 <br>
 
-#### **Status `403 - FORBIDDEN`** - "User is not an admin and employee"
-
-```json
-{
-  "message": "User is not an admin"
-}
-or
-{
-  "message": "User is not employee
-}
-```
-
 #
 
-## **1.5 Update User by Id**
+## **1.4 Update User by Id**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -441,7 +348,7 @@ or
 - Host: https://cine-express-projeto-m4.herokuapp.com
 - Authorization: Bearer Token
 - Content-type: application/json
-- User must be an Adm and employee
+- User must be an Adm and common User
 
 <br>
 
@@ -465,10 +372,9 @@ or
 {
 
   {
-    "name": "Thiago",
-    "birthDate": "2000/01/01",
-    "contact" : "99988866677",
-    "email": "thiago@mail.com",
+    "name": "Ricardo Martins",
+    "phone" : "0xx 98xxx-xxxx",
+    "email": "ricardo2@mail.com",
   }
 }
 ```
@@ -489,21 +395,17 @@ or
 
 <br>
 
-#### **Status `403 - FORBIDDEN`** - "User is not an admin and employee"
+#### **Status `401 - UNAUTHORIZED`** - "Only admin can update or delete other users"
 
 ```json
 {
-  "message": "User is not an admin"
-}
-or
-{
-  "message": "User is not employee
+  "message": "Only admin can update or delete other users"
 }
 ```
 
 #
 
-## **1.6 Delete User by Id**
+## **1.5 Delete User by Id**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -519,8 +421,8 @@ or
 - Host: https://cine-express-projeto-m4.herokuapp.com
 - Authorization: Bearer Token
 - Content-type: application/json
-- User must be an Adm and employee
-
+- User must be an Adm and common User
+  
 <br>
 
 ### **Request headers**:
@@ -559,15 +461,11 @@ No body returned for response
 
 <br>
 
-#### **Status `403 - FORBIDDEN`** - "User is not an admin and employee"
+#### **Status `403 - FORBIDDEN`** - "Only admin can update or delete other users"
 
 ```json
 {
-  "message": "User is not an admin"
-}
-or
-{
-  "message": "User is not employee"
+  "message": "Only admin can update or delete other users"
 }
 ```
 
@@ -595,16 +493,18 @@ or
 
 <br>
 
-The Payments object is defined as:
+The User object is defined as:
 
-| Field   | Type   | Description                                   |
-| ------- | ------ | --------------------------------------------- |
-| id      | string | Payment unique identifier                     |
-| name    | string | User name                                     |
-| number  | string | Card number                                   |
-| dueDate | string | Expiration date of this credit card           |
-| code    | string | Security code of credit card                  |
-| userId  | string | Define wich user is reference to this payment |
+| Field      | Type     | Description                                       |
+| ---------- | -------- | ------------------------------------------------- |
+| id         | string   | Contact unique identifier                         |
+| name       | string   | Contact name \*                                   |
+| email      | string   | Contact email \*                                  |
+| phone      | string   | Contact Phone \*                                  |
+| user       | string   | Defines which user owns this contact              |
+| createdAt  | string   | Date when the contact was created                 |
+
+<br>
 
 <br>
 
@@ -612,33 +512,26 @@ The Payments object is defined as:
 
 <br>
 
-| Method | Routes           | Description                                             |
-| ------ | ---------------- | ------------------------------------------------------- |
-| POST   | /paymentInfo     | To create a new payment data                            |
-| PATCH  | /paymentInfo/:id | To update the data payment using id user as a parameter |
-| GET    | /paymentInfo     | To list all payment data this user logged               |
-| GET    | /paymentInfo/:id | To list data payment using the id user as a parameter   |
-| DELETE | /paymentInfo/:id | To delete a data payment using id user as a parameter   |
+| Method | Routes        | Description                              |
+| ------ | -----------   | ---------------------------------------- |
+| POST   | /contacts     | Create contacts                          |
+| GET    | /contacts     | List all contacts                        |
+| PATCH  | /contacts/:id | Update contacts                          |
+| DELETE | /contacts/:id   | Delete contacts                        |
 
 ---
 
 <br>
 
-## **2.1 Data Payment Creation**
-
-[Back to Endpoints](#5-endpoints)
-
-<br>
-
-## POST `/paymentInfo`
+## POST `/contacts`
 
 <br>
 
 ### **Request**:
 
-- POST /paymentInfo
-- Host: https://cine-express-projeto-m4.herokuapp.com/paymentInfo
-- Authorization: Bearer Token
+- POST /contacts
+- Host: https://cine-express-projeto-m4.herokuapp.com
+- Authorization: None
 - Content-type: application/json
 
 <br>
@@ -647,11 +540,9 @@ The Payments object is defined as:
 
 ```json
 {
-  "name": "Joana",
-  "number": "1326598745632156",
-  "dueDate": "2023-06",
-  "code": "963",
-  "userId": "e64c6322-2a32-41be-8be9-37da17161ee2"
+  "name": "Guilherme",
+  "email": "guilherme@mail.com",
+  "phone": "0xx 9xxxx-xxxx",
 }
 ```
 
@@ -665,10 +556,15 @@ The Payments object is defined as:
 
 ```json
 {
-  "id": "d0980b56-56d8-47bb-b15a-7a5bd4f26074",
-  "name": "Joana",
-  "number": "1326598745632156",
-  "dueDate": "2023-06"
+
+  {
+	  "id": "341f4ee4-8d77-4866-bf47-8d3e32d531e8",
+    "name": "Guilherme Martins",
+    "email": "guilherme@mail.com",
+    "phone": "11999897898",
+    "user": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+    "createdAt": "2023-02-08T03:23:20.977Z"
+  }
 }
 ```
 
@@ -678,212 +574,40 @@ The Payments object is defined as:
 
 <br>
 
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
+
+#### **Status `409 - CONFLICTS`** - You already have this contact
+
 
 ```json
 {
-  "message": "Missing authorization token"
+  "message": "You already have this contact"
 }
 ```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - "Invalid card number"
-
-```json
-{
-  "message": "Invalid card number"
-}
-```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - "Date is required"
-
-```json
-{
-  "message": "Date is required"
-}
-```
-
-<br>
-
-#### **Status `400 - NOT FOUND`** - "Invalid code number"
-
-```json
-{
-  "message": "Invalid code number"
-}
-```
+### If that contact is already on your list.
+### Different users can have the same contact.
 
 #
 
-## **2.2 Update Payment Data**
+<br>
 
-[Back to Endpoints](#5-endpoints)
+## **1.2 List Contacts**
+
+[Back to Endpoints](#3-endpoints)
 
 <br>
 
-## PATCH `/paymentInfo/:id`
+## GET `/contacts`
 
 <br>
 
 ### **Request**:
 
-- PATCH /paymentInfo/:id
-- Host: https://cine-express-projeto-m4.herokuapp.com/paymentInfo/id
-- Authorization: Bearer Token
-- Content-type: application/json
-- User must be logged at your account
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-### **Request body**:
-
-```json
-{
-  "name": "Joana Maria",
-  "number": "1326598745632165",
-  "dueDate": "2023-06",
-  "code": "369",
-  "userId": "e64c6322-2a32-41be-8be9-37da17161ee2"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-  "id": "d0980b56-56d8-47bb-b15a-7a5bd4f26074",
-  "name": "Joana Maria",
-  "number": "1326598745632165",
-  "dueDate": "2023-06",
-  "code": "369"
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `404 - NOT FOUND`** - "User not found"
-
-```json
-{
-  "message": "User not found"
-}
-```
-
-#
-
-## **2.3 List General Payment Data**
-
-[Back to Endpoints](#5-endpoints)
-
-<br>
-
-## GET `/paymentInfo`
-
-<br>
-
-### **Request**:
-
-- GET /paymentInfo
-- Host: https://cine-express-projeto-m4.herokuapp.com/paymentInfo
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty Body
-- User must be logged
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-  "id": "d0980b56-56d8-47bb-b15a-7a5bd4f26074",
-  "name": "Joana",
-  "number": "1326598745632156",
-  "dueDate": "2023-06"
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#
-
-## **2.4 List Payment Data by Id**
-
-[Back to Endpoints](#5-endpoints)
-
-<br>
-
-## GET `/paymentInfo/:id`
-
-<br>
-
-### **Request**:
-
-- GET /paymentInfo/:id
-- Host: https://cine-express-projeto-m4.herokuapp.com/paymentInfo/id
+- GET /contacts
+- Host: https://cine-express-projeto-m4.herokuapp.com
 - Authorization: Bearer Token
 - Content-type: application/json
 - Empty body
-- User must be logged
+- User must be an Adm
 
 <br>
 
@@ -905,10 +629,90 @@ The Payments object is defined as:
 
 ```json
 {
-  "id": "d0980b56-56d8-47bb-b15a-7a5bd4f26074",
-  "name": "Joana",
-  "number": "1326598745632156",
-  "dueDate": "2023-06"
+  [
+    {
+      "id": "341f4ee4-8d77-4866-bf47-8d3e32d531e8",
+      "name": "Guilherme Martins",
+      "email": "guilherme@mail.com",
+      "phone": "11999897898",
+      "user": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+      "createdAt": "2023-02-08T03:23:20.977Z"
+    }
+    ...
+  ]
+}
+```
+
+<br>
+
+### **Error Responses**:
+
+<br>
+
+#### **Status `401 - UNAUTHORIZED`** - "Token required"
+
+```json
+{
+  "message": "Token required."
+}
+```
+
+<br>
+
+#### **Status `403 - UNAUTHORIZED`** - "User is not admin"
+
+```json
+{
+  "message": "User is not an admin"
+}
+```
+
+#
+
+## **1.3 Update Contact by Id**
+
+[Back to Endpoints](#3-endpoints)
+
+<br>
+
+## PATCH `/contacts/:id`
+
+<br>
+
+### **Request**:
+
+- PATCH /contacts/:id
+- Host: https://cine-express-projeto-m4.herokuapp.com
+- Authorization: Bearer Token
+- Content-type: application/json
+- User must be an Adm and common User
+
+<br>
+
+### **Request headers**:
+
+```json
+{
+  "authorization": "Bearer Token"
+}
+```
+
+<br>
+
+### **Expected Response**:
+
+<br>
+
+#### **Status `200 - OK`**
+
+```json
+{
+
+  {
+    "name": "Guilherme Martins",
+    "phone" : "0xx 97xxx-xxx2",
+    "email": "guilherme.martins@mail.com",
+  }
 }
 ```
 
@@ -922,31 +726,50 @@ The Payments object is defined as:
 
 ```json
 {
-  "message": "Missing authorization token"
+  "message": "Token required"
+}
+```
+
+<br>
+
+#### **Status `401 - UNAUTHORIZED`** - "You can only edit your own contact"
+
+```json
+{
+  "message": "You can only edit your own contact"
+}
+```
+
+<br>
+
+#### **Status `404 - NOT FOUND`** - "This contact dont exist"
+
+```json
+{
+  "message": "This contact dont exist"
 }
 ```
 
 #
 
-## **2.5 Delete Payment Data**
+## **1.4 Delete User by Id**
 
-[Back to Endpoints](#5-endpoints)
+[Back to Endpoints](#3-endpoints)
 
 <br>
 
-## DELETE `/paymentInfo/:id`
+## DELETE `/contacts/:id`
 
 <br>
 
 ### **Request**:
 
-- DELETE /paymentInfo/id
-- Host: https://cine-express-projeto-m4.herokuapp.com/paymeentInfo/id
+- DELETE /contacts/:id
+- Host: https://cine-express-projeto-m4.herokuapp.com
 - Authorization: Bearer Token
 - Content-type: application/json
-- Empty body
-- User must be logged
-
+- User must be an Adm and common User
+  
 <br>
 
 ### **Request headers**:
@@ -983,6 +806,24 @@ No body returned for response
 }
 ```
 
+<br>
+
+#### **Status `401 - UNAUTHORIZED`** - "You can only update or delete your own contact"
+
+```json
+{
+  "message": "You can only update or delete your own contact"
+}
+```
+
+### **Status `404 - Not Found`** - "Contact not found"
+
+```json
+{
+  "message": "Contact not found"
+}
+```
+
 #
 
 
@@ -994,13 +835,10 @@ No body returned for response
 
 The Session object is defined as:
 
-| Field   | Type   | Description                   |
-| ------- | ------ | ----------------------------- |
-| id      | string | Unique Session Id             |
-| day     | string | Session date                  |
-| hour    | string | Session Hour                  |
-| roomId  | string | Id of a room already created  |
-| movieId | string | Id of a movie already created |
+| Field    | Type   | Description                   |
+| -------- | ------ | ----------------------------- |
+| email    | string | Registered user email         |
+| password | string | Registered user password      |
 
 <br>
 
@@ -1011,16 +849,13 @@ The Session object is defined as:
 | Method | Routes               | Description                              |
 | ------ | -------------------- | ---------------------------------------- |
 | POST   | /sessions            | Create user                              |
-| GET    | /sessions            | List all users                           |
-| GET    | /sessions/:movieId   | Lists a user using its ID as a parameter |
-| PATCH  | /sessions/:sessionId | Update session                           |
-| DELETE | /sessions/:sessionId | Delete session                           |
+
 
 ---
 
 <br>
 
-## **6.1 Session Creation**
+## **6.1 Session**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -1043,10 +878,8 @@ The Session object is defined as:
 
 ```json
 {
-  "day": "2022/11/12",
-  "hour": "13:00",
-  "room_id": "1",
-  "movie_id": "1"
+  "email": "ricardo@gmail.com",
+	"password": "123456"
 }
 ```
 
@@ -1056,30 +889,12 @@ The Session object is defined as:
 
 <br>
 
-#### **Status `201 - CREATED`**
+#### **Status `200 - OK`**
 
 ```json
 {
-  "session": {
-    "day": "2022-11-15",
-    "hour": "19:00:00",
-    "room": {
-      "id": 1,
-      "capacity": 100
-    },
-    "movie": {
-      "id": 1,
-      "name": "A Família Adams",
-      "gender": "Comédia",
-      "avaliation": "4.9",
-      "duration": "1:55",
-      "onDisplay": true,
-      "cinema": {
-        "id": 1,
-        "name": "Cine Express"
-      }
-    },
-    "id": 4
+  {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc4NWFjMDRmLWE4NWMtNGJlMy05YTc5LTY3NmFjYzZhYmUyYiIsImlzQWRtIjp0cnVlLCJpYXQiOjE2NzU4MjQyMDQsImV4cCI6MTY3NTkxMDYwNCwic3ViIjoiNzg1YWMwNGYtYTg1Yy00YmUzLTlhNzktNjc2YWNjNmFiZTJiIn0.2Fwg3Fl4DBJcbZyR3mMSyJ76wV7BI-HQrCGZBYQYdX8"
   }
 }
 ```
@@ -1090,694 +905,11 @@ The Session object is defined as:
 
 <br>
 
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
+#### **Status `403 - FORBIDDEN`** - "Missing authorization token"
 
 ```json
 {
-  "message": "Missing authorization token"
+	"message": "Invalid user or password"
 }
 ```
 
-<br>
-
-#### **Status `400 - BAD REQUEST`** - Missing required field
-
-```json
-{
-  "message": "Missing required field"
-}
-```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - This room dont exist
-
-```json
-{
-  "message": "This room dont exist"
-}
-```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - This movie dont exist
-
-```json
-{
-  "message": "This movie dont exist"
-}
-```
-
-#
-
-## **6.2 List Sessions**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## GET `/sessions`
-
-<br>
-
-### **Request**:
-
-- GET /sessions
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty Body
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-  "sessions": [
-    {
-      "id": 1,
-      "day": "2022-11-16",
-      "hour": "19:00:00",
-      "room": {
-        "id": 7,
-        "capacity": 50
-      },
-      "movie": {
-        "id": 2,
-        "name": "A Família Buscapé",
-        "gender": "Comédia",
-        "avaliation": "5.0",
-        "duration": "1:58",
-        "onDisplay": true,
-        "cinema": null
-      }
-    },
-    {
-      "id": 2,
-      "day": "2022-11-15",
-      "hour": "15:00:00",
-      "room": {
-        "id": 7,
-        "capacity": 50
-      },
-      "movie": {
-        "id": 1,
-        "name": "A Família Adams",
-        "gender": "Comédia",
-        "avaliation": "4.9",
-        "duration": "1:55",
-        "onDisplay": true,
-        "cinema": null
-      }
-    }
-  ]
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-#
-
-## **6.3 List Sessions per Movie**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## GET `/sessions/movie/:movieId`
-
-<br>
-
-### **Request**:
-
-- GET /sessions/movie/:movieId
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty body
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-  "movie": {
-    "id": 2,
-    "name": "A Família Buscapé",
-    "gender": "Comédia",
-    "avaliation": "5.0",
-    "duration": "1:58",
-    "onDisplay": true,
-    "sessions": [
-      {
-        "id": 1,
-        "day": "2022-11-16",
-        "hour": "19:00:00",
-        "room": {
-          "id": 7,
-          "capacity": 50
-        }
-      },
-      {
-        "id": 3,
-        "day": "2022-11-17",
-        "hour": "21:00:00",
-        "room": {
-          "id": 7,
-          "capacity": 50
-        }
-      }
-    ],
-    "cinema": {
-      "id": 1,
-      "name": "Cine Express"
-    }
-  }
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `404 - NOT FOUND`** - "Movie not found"
-
-```json
-{
-  "message": "This movie dont exist"
-}
-```
-
-#
-
-## **6.4 Update Sessions**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## PATCH `/sessions/:id`
-
-<br>
-
-### **Request**:
-
-- PATCH /sessions/:id
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Body must contain any of the keys
-- User must be an Employee
-
-<br>
-
-### **Request body**:
-
-```json
-{
-  "day"?: "2022/11/17",
-  "hour"?: "21:00",
-  "roomId"?: "7",
-  "movieId"?: "2"
-}
-```
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `201 - OK`**
-
-```json
-{
-  "id": 1,
-  "day": "2022-11-15",
-  "hour": "15:00:00",
-  "room": {
-    "id": 1,
-    "capacity": 100
-  },
-  "movie": {
-    "id": 1,
-    "name": "Jason 2",
-    "gender": "Horror",
-    "avaliation": "4.3",
-    "duration": "2:00",
-    "onDisplay": true,
-    "cinema": {
-      "id": 1,
-      "name": "Cine Express"
-    }
-  }
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `404 - NOT FOUND`** - "Session not found"
-
-```json
-{
-  "message": "This session dont exist"
-}
-```
-
-#
-
-## **6.5 Delete Sessions**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## DELETE `/sessions/:id`
-
-<br>
-
-### **Request**:
-
-- DELETE /sessions/:id
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty Body
-- User must be an Admin
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `204 - NO CONTENT`**
-
-```json
-No body returned for response
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `404 - NOT FOUND`** - "Session not found"
-
-```json
-{
-  "message": "Session not found"
-}
-```
-
-<br>
-
-#### **Status `403 - FORBIDDEN`** - "User is not Admin"
-
-```json
-{
-  "message": "User is not Admin"
-}
-```
-
-#
-
-## **7.** **TICKETS**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-The Ticket object is defined as:
-
-| Field     | Type   | Description                  |
-| --------- | ------ | ---------------------------- |
-| id        | string | Unique ticket Id             |
-| chair     | string | Ticket chair                 |
-| sessionId | number | Sessions's unique identifier |
-| userId    | string | User's unique identifier     |
-
-<br>
-
-### **Endpoints**
-
-<br>
-
-| Method | Routes       | Description       |
-| ------ | ------------ | ----------------- |
-| POST   | /tickets     | Create user       |
-| GET    | /tickets     | List all tickets  |
-| GET    | /tickets/:id | List ticket by id |
-
----
-
-<br>
-
-## **7.1 Ticket Creation**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## POST `/tickets`
-
-<br>
-
-### **Request**:
-
-- POST /tickets
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-
-<br>
-
-### **Request body**:
-
-```json
-{
-  "chair": "5",
-  "session": 2,
-  "user": "1597a7b4-24e5-4856-a52c-70576459de11"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `201 - CREATED`**
-
-```json
-{
-  "id": "d1eaa744-85d5-4eef-8f38-53a92320e786",
-  "chair": "5",
-  "session": {
-    "id": 2,
-    "day": "2022-11-10",
-    "hour": "15:00:00",
-    "room": {
-      "id": 14,
-      "capacity": 70
-    }
-  },
-  "price": 15
-}
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - Missing required field
-
-```json
-{
-  "message": "Missing required field"
-}
-```
-
-<br>
-
-#### **Status `400 - BAD REQUEST`** - Chair already in use
-
-```json
-{
-  "message": "Chair already in use"
-}
-```
-
-#
-
-## **7.2 List all Tickets**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## GET `/tickets`
-
-<br>
-
-### **Request**:
-
-- PATCH /tickets/
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty Body
-- User must be an Employee
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-[
-	{
-		"id": "dc750695-f69a-4f79-9a9b-14a705c7a5c1",
-		"price": 15,
-		"chair": 11,
-		"session": {
-			"id": 2,
-			"day": "2022-11-10",
-			"hour": "15:00:00",
-			"room": {
-				"id": 14,
-				"capacity": 70
-			}
-		}
-	},
-    ...
-]
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - User is not Employee
-
-```json
-{
-  "message": "User is not employee"
-}
-```
-
-#
-
-## **7.3 List Ticket by ID**
-
-[Back to Endpoints](#3-endpoints)
-
-<br>
-
-## GET `/tickets/:id`
-
-<br>
-
-### **Request**:
-
-- PATCH /tickets/:id
-- Host: https://cine-express-projeto-m4.herokuapp.com
-- Authorization: Bearer Token
-- Content-type: application/json
-- Empty Body
-
-<br>
-
-### **Request headers**:
-
-```json
-{
-  "authorization": "Bearer Token"
-}
-```
-
-<br>
-
-### **Expected Response**:
-
-<br>
-
-#### **Status `200 - OK`**
-
-```json
-{
-	"id": "dc750695-f69a-4f79-9a9b-14a705c7a5c1",
-	"price": 15,
-	"chair": 11,
-	"session": {
-		"id": 2,
-		"day": "2022-11-10",
-		"hour": "15:00:00",
-		"room": {
-			"id": 14,
-			"capacity": 70
-		}
-	}
-},
-```
-
-<br>
-
-### **Error Responses**:
-
-<br>
-
-#### **Status `401 - UNAUTHORIZED`** - "Missing authorization token"
-
-```json
-{
-  "message": "Missing authorization token"
-}
-```
-
-<br>
-
-#### **Status `404 - NOT FOUND`** - "Ticket not found"
-
-```json
-{
-  "message": "Ticket not found"
-}
-```

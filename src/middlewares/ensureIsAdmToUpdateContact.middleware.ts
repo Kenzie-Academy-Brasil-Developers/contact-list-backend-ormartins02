@@ -16,7 +16,7 @@ export const ensureIsAdmToUpdateContactMiddleware = async (
 
   if (findContact.user !== user && req.user.isAdm === false) {
     return res.status(401).json({
-      message: "You can only edit your own contact",
+      message: "You can only update or delete your own contact",
     });
   }
 

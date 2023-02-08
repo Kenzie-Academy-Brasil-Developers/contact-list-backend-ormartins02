@@ -12,7 +12,7 @@ export const ensureIsAdmToUpdateMiddleware = async (
 
   if (idParams !== idUser && req.user.isAdm === false) {
     return res.status(401).json({
-      message: "User is not admin",
+      message: "Only admin can update or delete other users",
     });
   }
 
