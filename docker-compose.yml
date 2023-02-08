@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  node_api:
+    container_name: "contactlist_api"
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=docker_db
+      - DB_USER=postgres
+      - DB_PASSWORD=1234
+      - DB=contactlist_db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    depends_on:
+      docker_db:
+        condition: service_healthy
+    command: bash -c "yarn typeorm migration:run -d src/data-source && yarn dev"
+
+  docker_db:
+    container_name: postgres_db
+    image: postgres:15.1
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=contactlist_db
+      - POSTGRES_PASSWORD=1234
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U postgres -d contactlist_db",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
