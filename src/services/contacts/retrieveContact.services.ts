@@ -1,10 +1,10 @@
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entities";
 
-export const retrieveContactService = async (): Promise<Contact[]> => {
+export const retrieveContactService = async () => {
   const contactRespository = AppDataSource.getRepository(Contact);
 
-  const contact = await contactRespository.find();
+  const contactList = await contactRespository.find();
 
-  return contact;
+  return contactList;
 };

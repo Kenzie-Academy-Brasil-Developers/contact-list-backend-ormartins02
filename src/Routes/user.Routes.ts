@@ -5,8 +5,10 @@ import { updateUserController } from "../controllers/users/updateUser.controller
 import { deleteUserController } from "../controllers/users/deleteUser.controller";
 import { ensureBodyVerifyMiddleware } from "../middlewares/ensureBodyVerify.middleware";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
-import { ensureIsAdmToUpdateMiddleware } from "../middlewares/ensureIsAdmToUpdate.middleware";
 import { ensureIsAdmMiddleware } from "../middlewares/ensureIsAdm.middleware";
+import { retrieveMyUserController } from "../controllers/users/retrieveMyUser.controller";
+import { ensureIdVerifyMiddleware } from "../middlewares/ensureIdVerify.middleware";
+import { ensureIsAdmToUpdateMiddleware } from "../middlewares/ensureIsAdmToUpdate.middleware";
 
 export const userRoutes = Router();
 
@@ -17,9 +19,16 @@ userRoutes.get(
   ensureIsAdmMiddleware,
   retrieveUserController
 );
+userRoutes.get(
+  "/:id",
+  ensureAuthMiddleware,
+  ensureIdVerifyMiddleware,
+  retrieveMyUserController
+);
 userRoutes.patch(
   "/:id",
   ensureAuthMiddleware,
+  ensureIdVerifyMiddleware,
   ensureIsAdmToUpdateMiddleware,
   ensureBodyVerifyMiddleware,
   updateUserController
@@ -27,6 +36,7 @@ userRoutes.patch(
 userRoutes.delete(
   "/:id",
   ensureAuthMiddleware,
-  ensureIsAdmMiddleware,
+  ensureIdVerifyMiddleware,
+  ensureIsAdmToUpdateMiddleware,
   deleteUserController
 );

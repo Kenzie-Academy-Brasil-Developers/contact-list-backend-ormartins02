@@ -1,11 +1,10 @@
-import { Contact } from "../entities/contact.entities";
 
 export interface IUserRequest {
   name: string;
   email: string;
   phone: string;
   password: string;
-  isAdm?: boolean;
+  isAdm: boolean;
 }
 
 export interface IUser {
@@ -15,7 +14,6 @@ export interface IUser {
   phone: string;
   isAdm: boolean;
   createdAt: Date;
-  contacts: Contact[];
 }
 export interface IUserUpdate {
   name?: string;

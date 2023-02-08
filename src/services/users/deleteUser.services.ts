@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entities";
-import { AppError } from "../../errors/appError";
+import AppError from "../../errors/appError";
 
 export const deleteUserService = async (id: string) => {
   const userRepository = AppDataSource.getRepository(User);
@@ -12,5 +12,7 @@ export const deleteUserService = async (id: string) => {
     throw new AppError("User not Found", 404);
   }
 
-  return "User desactived";
+  await userRepository.delete(id)
+
+  return "User deleted";
 };

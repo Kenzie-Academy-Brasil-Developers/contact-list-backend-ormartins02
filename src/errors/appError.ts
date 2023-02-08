@@ -1,9 +1,13 @@
-export class AppError extends Error {
-  statusCode: number;
+import {Request} from "express"
 
-  constructor(message: string, statusCode: number = 400) {
-    super();
+class AppError {
+  public readonly message: string;
+  public readonly statusCode: number;
+
+  constructor(message: any, statusCode: number) {
     this.message = message;
     this.statusCode = statusCode;
   }
 }
+
+export default AppError;

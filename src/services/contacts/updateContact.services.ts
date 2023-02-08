@@ -1,6 +1,6 @@
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entities";
-import { AppError } from "../../errors/appError";
+import AppError from "../../errors/appError";
 import { IContactUpdate } from "../../interfaces/contactsInterfaces";
 
 export const updateContactService = async (
@@ -15,7 +15,7 @@ export const updateContactService = async (
   });
 
   if (!findUser) {
-    throw new AppError("User not Found", 404);
+    throw new AppError("Contact not Found", 404);
   }
 
   await contactRepository.update(id, {

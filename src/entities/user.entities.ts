@@ -36,9 +36,8 @@ export class User {
 
   @OneToMany(
     () => Contact,
-    (contacts) => contacts.user
+    (contacts) => contacts.user, {onDelete: "SET NULL", eager: true}
   )
-  @JoinColumn()
   contacts: Contact[];
 
   constructor() {

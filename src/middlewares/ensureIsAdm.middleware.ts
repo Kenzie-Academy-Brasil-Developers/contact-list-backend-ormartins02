@@ -5,8 +5,9 @@ export const ensureIsAdmMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+
   if (!req.user.isAdm) {
-    return res.status(403).json({
+    return res.status(401).json({
       message: "User is not admin",
     });
   }

@@ -1,26 +1,44 @@
-import AppDataSource from "../../data-source";
+import { IContactRequest } from "../../interfaces/contactsInterfaces";
 import { Contact } from "../../entities/contact.entities";
-import { AppError } from "../../errors/appError";
-import { IUserRequest } from "../../interfaces/usersInterfaces";
+import AppDataSource from "../../data-source";
+import AppError from "../../errors/appError";
+import { User } from "../../entities/user.entities";
 
 export const createNewContactService = async ({
   name,
   email,
   phone,
-}: IUserRequest): Promise<Contact> => {
+}: IContactRequest, id: any)=> {
+
 
   const contactRepository = AppDataSource.getRepository(Contact);
 
-  const emailExist = await contactRepository.findOneBy({ email });
+  const userRepository = AppDataSource.getRepository(User);
 
-  if (emailExist) {
-    throw new AppError("This email is already being used", 400);
+  const user = await userRepository.findOneBy({id})
+
+  const emailExist = await contactRepository.findOne({ where: {
+    email
+  },
+  relations: {
+    user: true,
+  }, });
+
+  if (emailExist){ 
+    const userContactExist = emailExist.user.id
+
+    const userRequired = user.id
+
+    if (userContactExist === userRequired) {
+      throw new AppError("You already have this contact", 409);
+    }
   }
 
   const contact = contactRepository.create({
     name,
     email,
     phone,
+    user: id
   });
 
   await contactRepository.save(contact);

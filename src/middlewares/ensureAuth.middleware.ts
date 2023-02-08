@@ -6,7 +6,7 @@ export const ensureAuthMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
-  if (!req.headers) {
+  if (!req.headers.authorization) {
     return res.status(401).json({ message: "Token required" });
   }
 
@@ -15,7 +15,7 @@ export const ensureAuthMiddleware = async (
   if (!token) {
     return res.status(401).json({ message: "Invalid token" });
   }
-
+  
   token = token.split(" ")[1];
 
   jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {

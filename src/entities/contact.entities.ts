@@ -17,17 +17,18 @@ export class Contact {
   @Column({ length: 60 })
   name: string;
 
-  @Column({ length: 60, unique: true })
+  @Column({ length: 60 })
   email: string;
 
-  @Column({ length: 14, unique: true })
+  @Column({ length: 14 })
   phone: string;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => User, (user) => user.contacts)
   user: User;
+
 
   constructor() {
     if (!this.id) {
