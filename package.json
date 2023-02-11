@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
     "test": "cross-env NODE_ENV=test jest --verbose",
-    "typeorm": "typeorm-ts-node-commonjs",    
+    "typeorm": "typeorm-ts-node-commonjs",
     "build": "tsc",
     "start": "node dist/src/server.js --omit=dev"
   },
@@ -31,6 +31,7 @@
     "apperror": "^1.3.2",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
+    "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
