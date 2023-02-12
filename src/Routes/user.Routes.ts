@@ -6,7 +6,6 @@ import { deleteUserController } from "../controllers/users/deleteUser.controller
 import { ensureBodyVerifyMiddleware } from "../middlewares/ensureBodyVerify.middleware";
 import { ensureAuthMiddleware } from "../middlewares/ensureAuth.middleware";
 import { ensureIsAdmMiddleware } from "../middlewares/ensureIsAdm.middleware";
-import { retrieveMyUserController } from "../controllers/users/retrieveMyUser.controller";
 import { ensureIdVerifyMiddleware } from "../middlewares/ensureIdVerify.middleware";
 import { ensureIsAdmToUpdateMiddleware } from "../middlewares/ensureIsAdmToUpdate.middleware";
 
@@ -18,12 +17,6 @@ userRoutes.get(
   ensureAuthMiddleware,
   ensureIsAdmMiddleware,
   retrieveUserController
-);
-userRoutes.get(
-  "/:id",
-  ensureAuthMiddleware,
-  ensureIdVerifyMiddleware,
-  retrieveMyUserController
 );
 userRoutes.patch(
   "/:id",
