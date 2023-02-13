@@ -49,6 +49,7 @@ These were the main technologies used in this project:
 - [User](#1-users)
 - [Contact](#2-contacts)
 - [Session](#3-sessions)
+- [Profile](#4-profile)
 
 <br>
 
@@ -855,7 +856,7 @@ The Session object is defined as:
 
 <br>
 
-## **6.1 Session**
+## **3.1 Session**
 
 [Back to Endpoints](#3-endpoints)
 
@@ -913,3 +914,85 @@ The Session object is defined as:
 }
 ```
 
+#
+
+
+## **4.** **PROFILE**
+
+[Back to Endpoints](#4-profiles)
+
+<br>
+
+### **Endpoints**
+
+<br>
+
+| Method | Routes               | Description                                        |
+| ------ | -------------------- | -------------------------------------------------  |
+| GET    | /profile             | Get all data from the user who owns the token      |
+
+---
+
+<br>
+
+## **6.1 Profile**
+
+[Back to Endpoints](#3-endpoints)
+
+<br>
+
+## POST `/profile`
+
+<br>
+
+### **Request**:
+
+- GET /profile
+- Host: https://cine-express-projeto-m4.herokuapp.com
+- Authorization: Bearer Token
+- Content-type: application/json
+
+<br>
+
+### **No body Request**:
+
+<br>
+
+### **Expected Response**:
+
+<br>
+
+#### **Status `200 - OK`**
+
+```json
+{
+  {
+    "id": "7fd311fe-f80a-465e-9ed9-8bb4e28bbf45",
+    "name": "Ricardo",
+    "email": "ricardo@mail.com",
+    "phone" : "0xx 9xxxx-xxxx",
+    "isAdm": true,
+    "createdAt": "2022-10-29T00:41:28.717Z",
+    "contacts": []
+  }
+}
+```
+
+<br>
+
+### **Error Responses**:
+
+<br>
+
+#### **Status `403 - FORBIDDEN`** - "Missing authorization token"
+
+<br>
+<br>
+
+# Getting Started with DOCKER
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `docker-compose up`
