@@ -5,7 +5,7 @@ services:
     container_name: "contactlist_api"
     build: .
     ports:
-      - 3000:3000
+      - 3333:3333
     environment:
       - DB_HOST=docker_db
       - DB_USER=postgres

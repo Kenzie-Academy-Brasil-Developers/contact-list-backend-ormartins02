@@ -36,7 +36,7 @@ export class User {
 
   @OneToMany(
     () => Contact,
-    (contacts) => contacts.user, {onDelete: "SET NULL", eager: true}
+    (contacts) => contacts.user, {onDelete: "CASCADE", eager: true}
   )
   contacts: Contact[];
 
